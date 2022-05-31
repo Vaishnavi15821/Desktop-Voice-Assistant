@@ -66,12 +66,18 @@ class VoiceAssistant(App):
         self.window.add_widget(self.button)
 
         return self.window
+    
 engine=pyttsx3.init('sapi5')
 voices=engine.getProperty('voices')
 print(voices[1].id)
 engine.setProperty('voice',voices[0].id)
 
-
+def notifications():
+    (title = tt,
+     message = msg,
+     app_icon = "icon.ico",
+     timeout = 10,
+     toast = FALSE) 
 
 
 def speak(audio):
@@ -91,7 +97,7 @@ def wishme():
     else:
         speak("Good Evening!")
 
-    speak("I'm David! How may i help you?")
+    speak("I'm Darth Vader! How may i help you?")
 
 def username():
     speak("What should i call you?")
@@ -122,8 +128,8 @@ def takecommand():
     except Exception as e:
         print(e)
 
-        print("Say that again please:")
-        speak("Say that again please!")
+        print("Please say that again:")
+        speak("Please say that again!")
         return "None"
     
     return query
@@ -135,8 +141,8 @@ def sendEmail(to, content):
     server.starttls()
      
     # Enable low security in gmail
-    server.login('surabhipardeshi20@gmail.com', '###A1b2c3')
-    server.sendmail('surabhipardeshi20@gmail.com', to, content)
+    server.login('v.sinha15821@gmail.com', '###A1b2c3')
+    server.sendmail('v.sinha15821@gmail.com', to, content)
     server.close()
 
 
@@ -179,11 +185,11 @@ if __name__== "__main__":
             speak(strfTime)
 
         elif 'open visual studio code' in query:
-            path= "C:\\Users\\SURABHI\\AppData\\Local\\Programs\\Microsoft VS Code\\Code.exe"
+            path= "C:\Users\HP\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Visual Studio Code\Code.exe"
             os.startfile(path)
 
         elif 'open ms word' in query:
-            path= "C:\\Program Files\\Microsoft Office\\root\\Office16\\WINWORD.EXE"
+            path= "C:\Program Files\Microsoft Office\root\Office16\WINWORD.EXE"
             os.startfile(path)
 
         elif 'open gmail' in query:
@@ -194,7 +200,7 @@ if __name__== "__main__":
         elif 'play music' in query or "play song" in query:
             speak("Here you go with music")
             # music_dir = "G:\\Song"
-            music_dir = r"C:\Users\SURABHI\Desktop\New folder (2)\Gigakoops - Grinding Nemo.mp3"
+            music_dir = r"C:\Users\Desktop\New folder (2)\Gigakoops - Grinding Nemo.mp3"
             songs = os.listdir(music_dir)
             print(songs)   
             random = os.startfile(os.path.join(music_dir, songs[1]))
@@ -319,7 +325,7 @@ if __name__== "__main__":
             try:
                 speak("What should I say?")
                 content = takecommand()
-                to = "surabhi.pardeshi@cumminscollege.in"   
+                to = "vaishnavi.sinha@cumminscollege.in"   
                 sendEmail(to, content)
                 speak("Email has been sent !")
             except Exception as e:
@@ -327,12 +333,25 @@ if __name__== "__main__":
                 speak("I am not able to send this email")
 
         elif "set reminder" in query:
-           speak("What should i say?")
-           msg=takecommand()
+           speak("What is the title of the notification?")
+           tt = takecommand()
+           speak("What should the message say?")
+           msg = takecommand()
            speak("Set time")
-           t=takecommand()
-
-           notification.notify(title = "REMINDER", message=msg,timeout=2)
+           speak("number of days")
+           d = takecommand()
+           speak("number of hours")
+           h = takecommand()
+           speak("number of minutes")
+           m = takecommand()
+           speak("number of seconds")
+           s = takecommand()
+           t = (d * 86400) + (h * 3600) + m * 60 + s
+           timer = Timer(cal_time, notifications)
+           timer.start()
+            
+           time.sleep(cal_time)
+           break   
 
         elif "weather" in query:
             api_key="ede647f8f0454190970172613222905"
